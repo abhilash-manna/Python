@@ -18,6 +18,9 @@ Python libraries are two types
 
 2\.   Packages(Collection of modules)
 
+
+***Application in the Technolohies:***
+
 1\.   WebApplications or Backend End development
 
                   a.  Django
@@ -26,7 +29,7 @@ Python libraries are two types
                   
                   c.   RestAPI
                   
-                  2\.   DataScience/DA/BA
+2\.   DataScience/DA/BA
                   
                   a.  Numpy
                   
