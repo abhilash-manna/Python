@@ -517,3 +517,166 @@ Passing other keyword args of plt.grid():
 ```py
 plt.grid(color='g',lw=2,linestyle=':')
 ```
+##### Day-4 [24-03-2025]
+
+## Adding Legend:
+
+- If multiple lines present then it is difficult to identify which line represents which dataset/function.
+- To overcome this problem we can add legend
+
+```py
+>>>help(plt.legend)
+```
+Call signatures:
+- legend()
+- legend(handles, labels)
+- legend(labels)
+
+1). legend():
+------------
+Entries will be added to the legend in the order of plots creation.
+```py
+a = np.arange(10)
+plt.plot(a,a,marker='o',label='identity')
+plt.plot(a,a**2,marker='o',label='square')
+plt.plot(a,a**3,marker='o',label='cubic')
+plt.legend()
+plt.show()
+```
+2). legend(labels):
+-------------------
+- The argument is list of strings.
+- Each string is considered as a label for the plots, in the order they created.
+-		plt.legend(['label-1','label-2','label-3'])
+- This approach is **best suitable for adding legend for already existing plots**.
+
+```py
+a = np.arange(10)
+plt.plot(a,a,marker='o')
+plt.plot(a,a**2,marker='o')
+plt.plot(a,a**3,marker='o')
+#plt.legend(['Identity','Square','Cubic'])
+plt.legend(['a','a**2','a**3'])
+plt.show()
+```
+>[!Note]
+>	This approach is not recommended to use because we should aware the order in which plots were created.
+
+3). legend(handles,labels):
+--------------------------
+- We can define explicitly lines and labels in the legend() function itself.
+- It is recommended approach as we have complete control.
+-			plt.legend([line1,lin2],['label-1','label-2'])
+Ex:
+```py
+l = [10]
+a = l
+print(a)
+a, = l #unpack list elements and then assign values to provided variable
+print(a)
+```
+Ex:
+```py
+a = np.arange(10)
+line = plt.plot(a,a,'o-r')
+print(f'Type of line:{type(line)}')#list
+print(f'Line object: ===>{line}')#2-D Line object
+```
+Ex:
+```py
+a = np.arange(10)
+line, = plt.plot(a,a,'o-r')
+print(line)
+```
+Ex:
+```py
+lines = plt.plot(a,a,'o-r',a,a**2,'o-b',a,a**3,'o-g')
+print(type(lines))
+print(lines)
+```
+Ex:
+```py
+a = np.arange(10)
+line1, = plt.plot(a,a,'o-r')
+line2, = plt.plot(a,a**2,'o-b')
+line3, = plt.plot(a,a**3,'o-g')
+plt.legend([line1,line2,line3],['identity','square','cubic'])
+plt.show()
+or
+line1,line2,line3 = plt.plot(a,a,'o-r',a,a**2,'o-b',a,a**3,'o-g')
+plt.legend([line1,line2,line3],['identity','square','cubic'])
+or
+lines = plt.plot(a,a,'o-r',a,a**2,'o-b',a,a**3,'o-g')
+plt.legend(lines,['identity','square','cubic'])
+```
+How to adjust legend location:
+------------------------------
+Based on our requirement we can decide legend location in the plot loc argument.  
+loc--->location
+```py
+plt.legend([line1,line2,line3],['identity','square','cubic'],loc=1)
+or
+# loc = 'upper right'
+# loc = 3
+# loc = 10
+```
+How to specify number of columns in the legend
+---------------------------------------------
+- Bydefault the number of columns: 1
+- But we can customize by using ncol argument.
+```py
+plt.legend(lines,['identity','square','cubic'],ncol=3)
+```
+
+We can do more customization for the legend like
+
+1. We can add title to the legend.
+2. We can change look and feel.
+3. We can change fontsize and color.
+4. We can place legend outside of the plot etc. .
+
+Adding title to legend:
+```py
+	plt.legend(lines,['identity','square','cubic'],title='3 common function')
+```
+How to add legend outside of the plot:
+---
+- For this we have to use loc keyword argument.
+>		loc = (x,y)
+```py
+plt.legend(lines,['identity','square','cubic'],loc=(0,1.1))#(0,0),(1,0),(1,1)
+plt.tight_layout()#to fix the legend at fixed position
+```
+Customization of tick location and labels:
+------------------------------------------
+```py
+a = np.arange(11)
+b = a*100
+plt.plot(a,b,'o-r')
+plt.grid()
+plt.title('Sales Report')
+plt.xlabel('Year')
+plt.ylabel('Number of sales')
+plt.show()
+```
+- Ticks are the markers to represent specific value on the axis.
+- Ticks are very helpful to locate data points on the plot very easily.
+- Based on our input, matplotlib decides tick value automatically.
+- Based on our requirement, we can customize tick location and labels.
+- For this we have to use:
+
+ 		xticks()
+ 		yticks()
+
+Ex:
+```py
+plt.xticks(ticks=[0,1,2,3,4,5,6,7,8,9,10],labels=['2000','2001','2002','2003','2004',
+'2005','2006','2007','2008','2009','2010'],color='blue',size=15,rotation=30,
+family='fantasy')
+plt.yticks([0,100,200,300,400,500,600,700,800,900,1000])
+```
+>[!Note]
+> If we pass empty list to xticks() or yticks() then corresponding ticks will be disabled on the plot.
+>
+> plt.xticks([]) ==>xticks will be disabled  
+> plt.yticks([]) ==>yticks will be disabled
