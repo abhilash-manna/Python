@@ -126,7 +126,7 @@ plt.ylabel('Square of N')
 > -	plt.ylabel() ==> Describes info aboy y-axis data
 > -	plt.show() ==> To show the line plot
 
-Line propertirs:
+Line properties:
 -----------------
 A line drawn on the graph has several properties like **color, style, width of the line, transparency** etc... We can customize these based on our requirement.
 
@@ -213,3 +213,172 @@ plt.plot(x,y,marker='o',linestyle='--')
 | 'y'           | yellow     |
 | 'k'           | black     |
 | 'w'           | white     |
+
+
+##### Day-2 [20-03-2025]
+
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.arange(1,11)
+plt.plot(x,x) #Identity function
+plt.plot(x,x**2) #square function
+plt.plot(x,x**3) #cubic function
+plt.show()
+```
+default color:
+--------------
+If we do not specify a color then default color will be selected from the style circle
+	blue,orange,green,red.....
+
+Shortcut way to set color, marker and line style:
+------------------------------------------------
+shortcut notation either **mlc** or **cml**
+```py
+# c -->color
+# l -->linestyle
+# m -->marker
+plt.plot(x,y,'o-r')
+plt.plot(x,y,'ro-')
+```
+>[!Note]
+>- In the shortcut way **we should use short code for color** i.e b,g,y,k,c etc...
+>- The values red,yellow not allowed in shortcut way.
+>```py
+>plt.plot(x,x,'o-r')#valid
+>plt.plot(x,x,'o-red')#invalid
+>plt.plot(x,x,'o-#1c203d')#invalid
+>```
+4).alpha property:
+---------------
+- Denotes **transparency of the color**
+- value is between **0.0 to 1.0.**
+```py
+plt.plot(x,x,'o-r',alpha=1.0)
+```
+[offical document - matplotlib.lines](https://matplotlib.org/stable/api/lines_api.html)
+
+5).linewidth and marker size:
+--------------------------
+```py
+plt.plot(x,x**3,'o-r',lw=10,ms=15)
+plt.plot(x,x**3,'o-r',lw=10,ms=15,mfc='yellow',alpha=1)
+```
+## Components of line plot:
+- figure
+- axes/plot
+- x-axis and y-axis
+- title
+- xlabel and ylabel
+- xticks and yticks
+
+Sequence of activities of plot function:
+----------------------------------------
+1. Creation of figure object.
+2. Creation of plot/axes object.
+3. Draw x and y axis
+4. Mark evenly spaced values on x-axis and y-axis(xticks and yticks)
+5. Plot the data points
+6. connect these data points with line
+7. Add title, xlabel, ylabel
+
+How to customize the size of the figure: figure() 
+----------------------------------------
+- The default size of the figure: **8 inches width and 6 inches height**.
+- But we can customize based on our requirement. For this we have to use **figure()** function.
+```py
+>>> import matplotlib.pyplot as plt
+>>> help(plt.figure)
+figure(num=None, figsize=None, dpi=None, facecolor=None, edgecolor=None, frameon=True, FigureClass=<class 'matplotlib.figure.Figure'>, clear=False, **kwargs)
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+plt.figure(num=1,figsize=(10,4),facecolor='blue')
+x = np.arange(1,6)
+plt.plot(x,x,'o-r')
+plt.show()
+
+# Ex:
+plt.figure(num=1,figsize=(3,3),facecolor='green')
+```
+How to save line plot to a file : savefig()
+--------------------------------
+- We can save line plot to a file instead of displaying on the screen.
+- We have to use **savefig()** function.
+```py
+>>> help(plt.savefig)
+
+plt.figure(num=1,figsize=(10,4),facecolor='green')
+x = np.arange(1,6)
+plt.plot(x,x,'o-r')
+plt.savefig('identitylineplot.png')
+
+# Bydefault this figure will be saved in the current working directory.
+# But we can provide any location based on our requirement.
+plt.savefig('C:\\Users\\mahesh\\Desktop\\identitylineplot.png')
+```
+Creation of line plot by passing a single ndarray:
+--------------------------------------------------
+- plt.plot(a,b) ----> **a for x-axis** and **b for y-axis**
+- plt.plot(a) ----> **a is y-axis** and **x-axis values will be generated automatically** by matplotlib from 0 to N-1. Where N is size of the datapoints of a [Size of ndarray passed].
+
+Ex:
+```py
+a = np.array([10,20,30,40,50])
+plt.plot(a) #0 to 4 will be considered as x-axis
+# a (ndarray) values are considered as y-axis
+# Now the data points are:(0,10),(1,20),(2,30),(3,40),(4,50)
+```
+Ex:
+```py
+a = np.array([10,20,30,40,50])
+plt.plot(a,'o-r')
+plt.show()
+```
+Multiple lines on the same plot
+-------------------------------
+- We can plot any number of line plots on the same graph.
+- This approach is helpful for comparision purpose.
+
+Ex:
+```py
+x = np.arange(1,11)
+i = x
+s = x**2
+c = x**3
+plt.plot(x,i,'o-r')
+plt.plot(x,s,'o-b')
+plt.plot(x,c,'o-g')
+plt.title('One Graph, but multiple plots')
+plt.show()
+
+# Shortcut way:
+# We can also use single plot() function for all 3-lines
+plt.plot(x,i,'o-r',x,s,'o-b',x,c,'o-g')
+```
+How to customize properties of title of plot :
+--------------------------------
+```py
+>>> help(plt.title)
+		title(label, fontdict=None, loc=None, pad=None, *, y=None, **kwargs)
+```
+
+Ex:
+```py
+x = np.arange(1,11)
+s = x**2
+plt.plot(x,s,'o-r')
+plt.title('Square Function Plot',{'color':'b'})
+plt.show()
+
+#1.
+plt.title('Square Function Plot',color='g')
+#2.
+plt.title('Square Function Plot',{'color':'r','size':20})
+#3.
+plt.title('Square Function Plot', {'color':'r','size':20,'backgroundcolor':'yellow','alpha':1})
+```
+[**Title text Properties**](https://matplotlib.org/stable/users/explain/text/text_props.html)
