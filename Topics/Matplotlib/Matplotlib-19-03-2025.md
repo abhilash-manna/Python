@@ -382,3 +382,138 @@ plt.title('Square Function Plot',{'color':'r','size':20})
 plt.title('Square Function Plot', {'color':'r','size':20,'backgroundcolor':'yellow','alpha':1})
 ```
 [**Title text Properties**](https://matplotlib.org/stable/users/explain/text/text_props.html)
+
+
+##### Day-3 [22-03-2025]
+
+- family  [ 'serif' | 'sans-serif' | 'cursive' | 'fantasy' | 'monospace' ]
+- style or fontstyle [ 'normal' | 'italic' | 'oblique' ]
+- weight or fontweight [ 'normal' | 'bold' | 'heavy' | 'light' | 'ultrabold' | 'ultralight']
+
+Ex:
+```py
+plt.title('Square Function Plot', {'color':'b','size':20,'backgroundcolor':'yellow','fontstyle':'italic','family':'cursive',
+'weight':1000,'rotation':3},loc='right',pad=15,color='r')
+```
+Customization of xlabel and ylabel:
+----------------------------------
+```py
+>>> help(plt.xlabel)
+xlabel(xlabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
+    Set the label for the x-axis.
+```
+```py
+>>> help(plt.ylabel)
+xlabel(ylabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)
+    Set the label for the y-axis.
+```
+Ex:
+```py
+x = np.arange(1,11)
+s = x**2
+plt.plot(x,s,'o-r')
+plt.title('Square Function Plot')
+plt.xlabel('Year',{'color':'r','size':20,'backgroundcolor':'yellow','rotation':10,'alpha':1,'fontstyle':'italic','family':'cursive','weight':1000})
+plt.ylabel('Data Science Sales',color='r',size=20,backgroundcolor='yellow',rotation=91, alpha=1,fontstyle='italic',family='cursive',weight=1000)
+plt.show()
+```
+>[!Note]
+> {'color':'r'} and color='b', In this case of conflict, **keyword args will get more priority**.
+> This is because keyword args are provided at last when we calling a function.  
+> Generally latest values are to be considered by the PVM.  
+> Here keyword args are the latest values, fontdict properties are same for **title, xlabel and ylabel**.  
+> These values can be passed as keyword args also. In the case of conflict, **keyword args will get more priority**.
+
+How to add grid lines to the plot:
+---------------------------------
+```py
+>>> help(plt.grid)
+grid(visible=None, which='major', axis='both', **kwargs)
+    Configure the grid lines.
+
+plt.grid() ===> on ==> grid lines are visible
+plt.grid() ===> off ==> grid lines are invisible
+plt.grid() ===> on ==> grid lines are visible
+plt.grid() ===> off ==> grid lines are invisible
+```
+>[!Note]
+>- when **visible is None** and there are **no kwargs**, this **toggles** the visibility of the lines.
+>- **default value for visible is None**.
+
+Case-1: grid lines are visible
+----------------------------
+```py
+a = np.array([10,20,30,40,50])
+plt.plot(a,a,'o-r')
+plt.grid()
+plt.show()
+```
+Case-2: grid lines are not visible
+---------------------------
+```py
+plt.grid()
+plt.grid()
+```
+Case-3: if keyword args are given then grid lines are visible
+------------------------------------------------------
+```py
+plt.grid()
+plt.grid(color='g')
+```
+Case-4: plt.grid(visible=True) ===> gridlines are visible
+-------------------------------------------------------
+```py
+plt.grid(visible=True)
+plt.grid(visible=False)
+```
+which property of plt.grid():
+---------------
+- default is major
+- There are major grid lines and minor grid lines are present.
+- **which property will decides which grid lines are going to be displayed**.
+- The allowed values are:  
+	 which : {'major', 'minor', 'both'} ==> The default value is **major.**
+- Bydefault major grid lines will be displayed
+
+```py
+plt.grid(which='both')
+plt.show()
+```
+- It display only major grid lines.
+- To show the minor gridlines we have to activate the **minorticks_on**.
+
+```py
+>>>help(plt.minorticks_on)
+    Displaying minor ticks may reduce performance; you may turn them off
+    using minorticks_off() if drawing speed is a problem.
+```
+Difference between major and minor grid lines:
+--------------------------------------------
+```py
+a = np.array([10,20,30,40,50])
+plt.plot(a,a,'o-r',lw=7,markersize=10,mfc='yellow')
+plt.grid(color='red',lw=3)
+plt.minorticks_on()
+plt.grid(which='minor',color='g')
+plt.show()
+```
+axis property of of plt.grid():
+---
+	Along which axis, grid lines have to display
+	 axis : {'both', 'x', 'y'} ==> default value is both
+
+y - axis
+```py
+plt.grid(axis='y')
+plt.show()
+```
+x - axis
+```py
+plt.grid(axis='x')
+plt.show()
+```
+Passing other keyword args of plt.grid():
+---------------------------
+```py
+plt.grid(color='g',lw=2,linestyle=':')
+```
