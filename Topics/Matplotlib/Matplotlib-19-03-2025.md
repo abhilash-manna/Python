@@ -853,3 +853,143 @@ plt.show()
 	- Step-2: Creation of Axes object
 	- Step-3: Plot the graph
 	- Step-4: Set the properties of the axes
+
+##### Day-6 [26-03-2025]
+
+Step-1: Creation of Figure object
+---------------------------
+```py
+fig = plt.figure()
+plt.show()
+```
+Step-2: Creation of Axes object:
+------------------------------
+- Once figure object is ready, then we have to add axes to that object.
+- For this we have to use add_axes() method of Figure class.
+- This method returns Axes object.
+
+```py
+>>> help(plt.Figure.add_axes)
+
+# Parameters
+#    rect : sequence of float
+#        The dimensions [left, bottom, width, height] of the new Axes. All
+#        quantities are in fractions of figure width and height.
+
+# LBWH
+
+fig = plt.figure()
+axes = fig.add_axes([0.2,0.3,0.6,0.4])
+plt.show()
+```
+Step-3:Plot the graph:
+--------------------
+- Once Axes object is ready, then we can use the plot method.
+```py
+axes.plot(a,b)
+```
+Step-4:Set the properties of the axes
+--------------------------------
+```py
+axes.set_xlabel('xlabel')
+axes.set_ylabel('ylabel')
+axes.set_title('title')
+```
+Ex:
+```py
+a = np.arange(1,11)
+b = a**2
+fig = plt.figure()
+axes = fig.add_axes([0.2,0.3,0.6,0.4])#[left,bottom,width,height]lbwh
+axes.plot(a,b)
+axes.set_xlabel('N')
+axes.set_ylabel('Square of N')
+axes.set_title('Square Function')
+axes.grid()
+plt.show()
+
+# Note:
+# We can use single set() method to set all axes properties like title,xlabel,ylabel,xlim,ylim etc....
+
+axes.set(xlabel='N',
+ylabel='Square of N',
+title='Square Function',
+xlim=(1,5),
+ylim=(1,25))
+```
+
+## Bar Chart/ Bar Graph/ Bar Plot:
+- In a line plot, the data points will be marked and these markers will be connected by line.
+- But in bar charts, data will be represented in the form of bars.
+
+4-types of bar charts:
+1. Simple bar charts / vertical bar charts
+2. Horizontal bar charts
+3. Stacked bar charts
+4. Clustered bar charts / Grouped bar charts
+
+Simple bar charts/Vertical bar charts:
+-----------------------------------
+- The data will be represented in the form of vertical bars.
+- Each vertical bar represents an individual category.
+- The height/length of the bar is **based on value** it represents.
+- Most of the times the width of the bar is **fixed**, but we can customize.
+- The default width: **0.8**
+- By using **bar()** function we can create bar chart.
+
+```py
+>>> help(plt.bar)
+bar(x, height, width=0.8, bottom=None, *, align='center', data=None, **kwargs)
+    Make a bar plot.
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+heroes = ['Chiranjeevi','Nag','Venkatesh','Balaiah','Pawan Kalyan']
+movies = [1000,300,600,350,750]
+c = ['r','b','k','g','orange']
+w = [0.8,0.6,0.7,0.9,0.5]
+plt.bar(heroes,movies,color=c,width=w)
+plt.xlabel('Hero Name',color='b',fontsize=15)
+plt.ylabel('Number of movies',color='b',fontsize=15)
+plt.title('Hero wise number of movies',color='r',fontsize=15)
+plt.show()
+```
+Ex:Mobile sales of Nokia from 2011 to 2020
+```py
+import matplotlib.pyplot as plt
+years = [2011,2012,2013,2014,2015,2016,2017,2018,2019,2020]
+sales = [10000,25000,45000,30000,10000,5000,70000,60000,65000,50000]
+c = ['r','k','y','g','orange','m','c','b','lime','violet']
+plt.bar(years,sales,color=c)
+plt.xlabel('Year',color='b',fontsize=15)
+plt.ylabel('Number of sales',color='b',fontsize=15)
+plt.title('Nokia Mobile Sales in the last Decade',color='r',fontsize=15)
+plt.xticks(years,rotation=30)
+plt.tight_layout()
+plt.grid(axis='y')
+plt.show()
+```
+How to add labels to the bar:
+-----------------------------
+We can add labels to any plot by using 2-functions:
+1. pyplot.text()
+2. pyplot.annotate()
+```py
+>>>help(plt.text)
+text(x, y, s, fontdict=None, **kwargs)
+    Add text to the Axes.
+    Add the text *s* to the Axes at location *x*, *y* in data coordinates.
+```
+Adding labels for the data points of lineplots:
+-----------------------------------------
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+plt.plot(a,a,'r-o')
+#plt.text(2,2,'(2,2)',color='b',size=15)
+for i in range(a.size):#0 to 9
+	plt.text(a[i]+0.4,a[i]-0.2,f'{a[i],a[i]}',color='b')
+plt.show()
+```
