@@ -1104,6 +1104,8 @@ Country wise total population we have to represent. But in that population we ha
 
 The stacked bar chart can be **either vertical or horizontal**.
 
+## stacked vertical bar chart
+
 Ex-1:
 ```py
 import matplotlib.pyplot as plt
@@ -1142,4 +1144,222 @@ for i in range(len(names)):
 	ha='center',color='#008080',weight=1000)
 plt.tight_layout()
 plt.show()
+```
+##### Day-8 [28-03-2025]
+
+Ex:  
+Country wise medals but sub categories
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+country_names = ['India','China','US','UK']
+gold_medals = np.array([60,40,50,20])
+silver_medals = np.array([50,30,25,43])
+bronze_medals = np.array([55,24,45,6])
+#
+plt.bar(country_names,gold_medals,color='#FFD700',label='gold')
+plt.bar(country_names,silver_medals,bottom=gold_medals,
+#
+color='#C0C0C0',label='silver')
+plt.bar(country_names,bronze_medals,bottom=gold_medals+silver_medals,
+color='#CD7F32',label='bronze')
+plt.xlabel('Country Name',color='b',fontsize=15)
+plt.ylabel('Number of Medals',color='b',fontsize=15)
+plt.title('Counter Wise Medal Report',color='r',fontsize=15)
+plt.legend()
+plt.show()
+```
+## stacked horizontal bar chart
+
+Ex:  
+Country wise medals but sub categories
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+country_names = ['India','China','US','UK']
+gold_medals = np.array([60,40,50,20])
+silver_medals = np.array([50,30,25,43])
+bronze_medals = np.array([55,24,45,6])
+#
+plt.barh(country_names,gold_medals,color='#FFD700',label='gold')
+plt.barh(country_names,silver_medals,left=gold_medals,
+#
+color='#C0C0C0',label='silver')
+plt.barh(country_names,bronze_medals,left=gold_medals+silver_medals,color='#CD7F32',label='bronze')
+plt.ylabel('Country Name',color='b',fontsize=15)
+plt.xlabel('Number of Medals',color='b',fontsize=15)
+plt.title('Counter Wise Medal Report',color='r',fontsize=15)
+plt.legend()
+plt.show()
+```
+>[!Note]
+> - To change the vertical bar to horizontal bar
+> - bar() ---> barh()
+> - bottom ---> left
+> - xlabels and ylabels are interchanged.
+
+## Clustered Bar Chart/ Grouped Bar Chart/ Multiple Bar chart:
+
+- If each category contains multiple sub categories and if we want to represent all these sub categories side by side then we should go for clustered bar chart.
+- We can create **clustered bar chart by using either bar() or barh()** function.
+
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+names = ['Sunny','Bunny','Vinny','Chinny','Pinny']
+english_marks = np.array([90,80,85,25,50])
+maths_marks = np.array([25,23,45,32,25])
+xpos = np.arange(len(names))#[0,1,2,3,4]
+w = 0.3
+plt.bar(xpos,english_marks,color='r',width=w)
+plt.bar(xpos+w,maths_marks,color='g',width=w)
+plt.xticks(xpos+w/2,names)
+plt.legend(['eng','math'])
+plt.show()
+```
+
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+country_name = ['India','China','US','UK']
+gold_medals = np.array([60,40,50,20])
+silver_medals = np.array([50,30,25,43])
+bronze_medals = np.array([55,24,45,6])
+xpos = np.arange(len(country_name)) #[0,1,2,3]
+w = 0.2
+plt.bar(xpos,gold_medals,color='#FFD700',width=w)
+plt.bar(xpos+w,silver_medals,color='#C0C0C0',width=w)
+plt.bar(xpos+2*w,bronze_medals,color='#CD7F32',width=w)
+plt.xticks(xpos+w,country_name)
+plt.ylabel('Country Name',color='b',fontsize=15)
+plt.xlabel('Number of Medals',color='b',fontsize=15)
+plt.title('Country Wise Medals Report',color='r',fontsize=15)
+plt.legend(['gold','silver','bronze'])
+for i in range(len(country_name)):
+	plt.text(xpos[i],gold_medals[i]+1,gold_medals[i],
+	ha='center',color='r',weight=1000)
+	plt.text(xpos[i]+w,silver_medals[i]+1,silver_medals[i],
+	ha='center',color='r',weight=1000)
+	plt.text(xpos[i]+2*w,bronze_medals[i]+1,bronze_medals[i],
+	ha='center',color='r',weight=1000)
+plt.show()
+```
+EX:  
+India and Australia 20-20 over wise scores required to represent by using clustered bar chart.
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+overs = np.arange(1,21)
+xpos=np.arange(overs.size)
+ind_score = [10,12,8,9,10,22,13,17,3,23,11,10,9,8,23,30,10,9,8,7]
+aus_score = [6,8,9,15,23,8,9,6,10,17,13,2,21,15,19,17,4,12,14,10]
+w=0.3
+plt.figure(num=1,figsize=(16,4),facecolor='g')
+plt.bar(xpos,ind_score,width=w)
+plt.bar(xpos+w,aus_score,width=w)
+plt.xticks(xpos+(w/2),labels=overs)
+plt.xlabel('Overs',color='b')
+plt.ylabel('Number of Runs',color='b')
+plt.title('Overwise Scores Summary')
+plt.legend(['IND','AUS'],ncol=2)
+plt.grid(axis='y')
+plt.show()
+```
+### horizontal clustered bar chart:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+plt.figure(num=1,figsize=(12,10),facecolor='yellow')
+names = ['Bunny','Chinny','Vinny','Pinny']
+ypos = np.arange(len(names)) #[0,1,2,3]
+h=0.1
+english=np.array([45,67,82,95])
+telugu=np.array([70,80,54,76])
+maths=np.array([65,45,99,78])
+science=np.array([88,37,56,87])
+social=np.array([78,90,37,42])
+hindi=np.array([78,88,65,56])
+plt.barh(ypos,english,height=h)
+plt.barh(ypos+h,telugu,height=h)
+plt.barh(ypos+2*h,maths,height=h)
+plt.barh(ypos+3*h,science,height=h)
+plt.barh(ypos+4*h,social,height=h)
+plt.barh(ypos+5*h,hindi,height=h)
+plt.yticks(ypos+2.5*h,names)
+plt.xlabel('Marks',color='b')
+plt.ylabel('Names',color='b')
+plt.title('Students Marks Report',color='b')
+plt.legend(['Eng','Tel','Mat','Sci','Soc','Hin'])
+plt.show()
+```
+>[!Note]
+> 1. If we want to compare different catagories of values then we should go for bar chart.  
+> i.e vertical bar chart and we can create by using bar() function.
+>
+> 2. If we want to compare different catagories of values and the labels are too long or multiple values to represent then we should go for horizontal bar chart.  
+We can create by using barh() function.
+>
+>3. If we want to compare different catagories of values and each catagory contains multiple sub categories and if we want to represent values on top of the other then we should go for stacked bar chart. It can be either vertical or horizontal.
+>
+> 4. If we want to compare different categories of values and each category contains multiple sub categories and if we want to represent values side by side then we should go for clustered bar charts.
+
+## Pie Chart:
+
+- Pie chart is a circular chart devided into segments. These segments are called as **wedges**.
+- Each wedge represents an individual category. The **area of the wedge is propotional to value of that category**.
+- Pie chart is very helpful for comparision of categories.
+- The number of categories are less **mostly <=5**.
+
+Ex:
+- 20 overs, overwise socres --> bar chart but not pie chart
+- The chance of winning match --> pie chart
+```py
+>>> help(plt.pie)
+pie(x, explode=None, labels=None, colors=None, autopct=None, pctdistance=0.6, shadow=False, labeldistance=1.1, startangle=0, radius=1, counterclock=True, wedgeprops=None, textprops=None, center=(0, 0), frame=False, rotatelabels=False, *, normalize=True, data=None)
+    Plot a pie chart.
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+marks = np.array([25,30,43,12])
+plt.pie(marks)
+plt.show()
+```
+1. Adding labels:
+```py
+mylabels = ['Python','Java','Devopps','DataScience']
+plt.pie(marks,labels=mylabels)
+```
+2. autopct (auto percentage):  
+- To label wedges with their numeric percentage(%) , We can specify its value by using formatted string
+```py
+plt.pie(marks,labels=mylabels,autopct='%.2f')
+```
+To add % symbol also
+```py
+plt.pie(marks,labels=mylabels,autopct='%.2f%%')
+```
+3. explode:
+- If we want to **explode/highlight** a particular category then we should use explode argument.
+```py
+myexplode = [0.0,0.0,0.0,0.2]
+plt.pie(marks,labels=mylabels,autopct='%.2f%%',explode=myexplode)
+```
+4. shadow:
+
+>		shadow = True
+
+5. colors:
+
+```py
+mycolors = ['g','b','r','yellow']
+plt.pie(marks,
+	labels=mylabels,
+	autopct='%.2f%%',
+	explode=myexplode,
+	shadow=True,
+	colors=mycolors)
 ```
