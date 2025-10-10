@@ -993,3 +993,153 @@ for i in range(a.size):#0 to 9
 	plt.text(a[i]+0.4,a[i]-0.2,f'{a[i],a[i]}',color='b')
 plt.show()
 ```
+
+##### Day-7 [27-03-2025]
+
+pyplot.annotate():
+--------------------------
+```py
+>>> help(plt.annotate)
+annotate(text, xy, *args, **kwargs)
+```
+- Annotate the point **xy** with text **text**.
+- In the simplest form, the text is placed at **xy**.
+
+Ex:
+```py
+a = np.arange(10)
+plt.plot(a,a,'o-r')
+for i in range(a.size):#0 to 9
+	plt.annotate(f'{a[i]},{a[i]}',(a[i]+0.4,a[i]-0.2),color='g')
+plt.show()
+```
+How to add label to the barchart:
+-------------------------------
+```py
+import matplotlib.pyplot as plt
+years = [2011,2012,2013,2014,2015,2016,2017,2018,2019,2020]
+sales = [10000,25000,45000,30000,10000,5000,70000,60000,65000,50000]
+c = ['r','k','y','g','orange','m','c','b','lime','violet']
+plt.bar(years,sales,color=c)
+plt.xlabel('Year',color='b',fontsize=15)
+plt.ylabel('Number of sales',color='b',fontsize=15)
+plt.title('Nokia Mobile Sales in the last Decade',color='r',fontsize=15)
+plt.xticks(years,rotation=30)
+plt.tight_layout()
+for i in range(len(years)):#0 to 9
+	plt.text(years[i],sales[i]+500,str(sales[i]//1000)+'k',ha='center',color='b')
+plt.show()
+
+# Ex:
+for i in range(len(years)):#0 to 9
+	plt.annotate(str(sales[i]//1000)+'k',(years[i],sales[i]+500),
+	ha='center',color='g',backgroundcolor='yellow')
+```
+Plotting bar chart with data from csv file:
+---------------------------------------
+- Assume that data is available in student.csv file
+- which is present in current working directory, file name 'student.csv'.
+
+|Name of student  | Marks|
+|:-----------------|:-------|
+|sunny			|	100   |
+|bunny			|	200   |
+
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+import csv
+names = np.array([],dtype='str')
+marks = np.array([],dtype='int')
+f = open('student.csv','r')
+r = csv.reader(f)#Returns csv reader object
+h = next(r)#To read header and ignore
+for row in r:
+	names = np.append(names,row[0])
+	marks = np.append(marks,int(row[1]))
+c = ['#ED0A3F','#FFF700', '#FF00CC','#A83731','#0081AB',
+		'#8D4E85','#B2F302','#00755E','#E77200']
+plt.bar(names,marks,color=c)
+plt.show()
+```
+
+Note:
+If the labels are too long or too many values to represent then we should go for horizontal bar chart instead of vertical bar chart.
+
+Horizontal bar chart:
+-------------------
+- We will use **barh()** function.
+- Here the data will be represented in the form of horizontal bars.
+- Each bar represents an individual category.
+- The categories will be plotted on y-axis and data values will be plotted on x-axis.
+- **width/length of the bar is propotional to the value it represents**.
+- The default hight is **0.8**, but we can customize this value
+
+|Vertical | Horizontal|
+|:--------|:----------|
+|width    | height    |
+|bottom   | left      |
+|bar()    | barh()    |
+
+Ex:
+```py
+plt.barh(names,marks,color=c)
+plt.xlabel('Marks',fontsize=15,color='b')
+plt.ylabel('Name of the student',fontsize=15,color='b')
+plt.title('Student Marks Report',fontsize=15,color='r')
+plt.tight_layout()
+plt.show()
+```
+Stacked Bar Chart:
+----------------
+- If each category contains multiple subcatagories then we should go for stacked bar charts.
+- Here each sub catagory will be plotted on top of other sub cathagory
+
+Ex-1:
+Country wise total population we have to represent. But in that population we have to plot separately men and women
+
+- vertical bar chart ===> bar()
+- horizontal bar chart ===> barh()
+- **stacked** bar chart ===> bar() or barh()
+
+The stacked bar chart can be **either vertical or horizontal**.
+
+Ex-1:
+```py
+import matplotlib.pyplot as plt
+names = ['Sunny','Bunny','Vinny','Chinny','Pinny']
+english_marks = [90,80,85,25,50]
+maths_marks = [25,23,45,32,50]
+plt.bar(names,english_marks,color='r')
+plt.bar(names,maths_marks,color='g')
+plt.show()
+
+# Note:
+# In the above program overlapping will happens because both bars are started from 0.
+# To solve this issue we will use bttom property from which position the second bar should start.
+
+#By using bottom property
+plt.bar(names,english_marks,color='r')
+plt.bar(names,maths_marks,bottom=english_marks,color='g')
+plt.show()
+```
+with text labels on the bar
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+names = ['Sunny','Bunny','Vinny','Chinny','Pinny']
+english_marks = np.array([90,80,85,25,50])
+maths_marks = np.array([25,23,45,32,50])
+total_marks = english_marks + maths_marks
+plt.bar(names,english_marks,color='#09695c',label='English')
+plt.bar(names,maths_marks,bottom=english_marks,color='#9c0c8b',label='Maths')
+for i in range(len(names)):
+	plt.text(names[i],english_marks[i]/2,str(english_marks[i]),
+	ha='center',color='white',weight=1000)
+	plt.text(names[i],(english_marks[i]+maths_marks[i]/2),str(maths_marks[i]),
+	ha='center',color='white',weight=1000)
+	plt.text(names[i],(total_marks[i]+2),str(total_marks[i]),
+	ha='center',color='#008080',weight=1000)
+plt.tight_layout()
+plt.show()
+```
