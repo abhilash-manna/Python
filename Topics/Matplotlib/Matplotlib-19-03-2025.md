@@ -1363,3 +1363,157 @@ plt.pie(marks,
 	shadow=True,
 	colors=mycolors)
 ```
+
+##### Day-9 [1-04-2025]
+
+VIBGYOR colors
+---
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+marks = np.array([1,1,1,1,1,1,1])
+my_labels = ['Violet','Indigo','Blue','Green','Yellow','Orange','Red']
+my_colors = ['violet','indigo','blue','green','yellow','orange','red']
+plt.pie(marks,
+	labels=my_labels,
+	colors=my_colors,
+	autopct='%.2f%%',
+	shadow=True,
+	counterclock=False)
+plt.show()
+
+# Note:
+#	If the number of colors is less than the number of wedges, then the colors will be re-used.
+```
+startangle:
+----
+- startangle represents from where first wedge has to start.
+- Bydefault it starts from zero from x-axis and move in counter clock wise direction.
+```py
+marks = np.array([1,1,1,1])
+myexplode = [0.0,0.0,0.0,0.2]
+my_labels = ['Python','Java','Devops','DS']
+my_colors = ['g','b','r','yellow']
+plt.pie(marks,
+	labels=my_labels,
+	colors=my_colors,
+	autopct='%.2f%%',
+	shadow=True,
+	explode=myexplode,
+	startangle=90)
+plt.show()
+```
+counterclock:
+----
+- Bydefault the wedges will be considered in counter clockwise direction.
+- If we want clock wise direction we have to use counterclock argument.
+- The default value is True.
+```py
+counterclock = False
+```
+Adding legend:
+-----
+```py
+plt.legend(title='The 4 Subjects Marks')
+plt.tight_layout()
+```
+wedgeprops:
+-----
+- The wedges of pie chart can be customized using wedgeprops parameter.
+- It is a dictionary of key-value pairs.
+- The key can be edgecolor,linestyle,linewidth etc...
+```py
+wedgeprops={'edgecolor':'k','linestyle':'--','linewidth':3}
+```
+## Histogram
+
+- Frequency Distribution ===> It is nothing but number of observations in the given interval.
+- To represents such type of frequence distributions, we should go for histograms.
+
+Ex-1:
+
+- 300 students (marks: 0 to 100)
+	- 23 students got marks in the range:0 to 34
+	- 120 students got marks in the range:35 to 49
+	- 47 students got marks in the range:50 to 59
+	- 80 students got marks in the range:60 to 79
+	- 30 students got marks in the range:80 to 100
+We distributed 300 values in 5 intervals
+
+Ex-2:
+- We are conducting an experiment, where we are trying to roll 3 dicesone 1 lakh time.
+	- Every time the sum of outcome of 3 dices will be appended to the list.
+	- To analyze these 1 lakh values from the list, it is very difficult.
+	- If we convert this into visualization form then it is very easy.
+
+	- For every dice throw, the minimum value :1 and maximum value:6
+	- The minimum outcome is 3 and maximum outcode is: 18
+	- Total possible outcomes: 3 to 18 means 16 possible outcomes are there.
+
+	- total outcome:15,18,12,16,14,13,4,7,6,12.........
+	- 1 lakh values should be distributed into 16 intervals
+	- most likely possible values are lies 9 to 12
+
+Ex:
+```py
+import numpy as np
+import time
+while True:
+	d1 = np.random.randint(1,7)
+	d2 = np.random.randint(1,7)
+	d3 = np.random.randint(1,7)
+	print(f'{d1} + {d2} + {d3} = {d1+d2+d3}')
+	time.sleep(3)
+```
+- Histograms are very helpful to analyze large data sets.
+- To plot histograms, we have to divide total input values into equal sized groups or bins.
+- A bar is drawn for each bin. The height of each bar is proportional to the number of values related to that bar(bin or interval)
+- By using **hist()** function, we can create histograms.
+```py
+>>> help(plt.hist)
+hist(x, bins=None, range=None, density=False, weights=None, cumulative=False, bottom=None, histtype='bar', align='mid', orientation='vertical', rwidth=None, log=False, color=None, label=None, stacked=False, *, data=None, **kwargs)
+    Plot a histogram.
+```
+Ex-1: To create histogram with 10000 samples from uniform distribution in the interval [0,1)
+
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.random.rand(10000)
+xticks_l = [0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]
+plt.hist(x,bins=10,ec='yellow')
+plt.xticks(xticks_l)
+plt.show()
+```
+Ex-2: Rolling 3-dice experiment
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+l = [ ]
+x = np.arange(1,19)#[1,2,3,.....18]
+for i in range(100000):
+	d1 = np.random.randint(1,7)
+	d2 = np.random.randint(1,7)
+	d3 = np.random.randint(1,7)
+	l.append(d1+d2+d3)
+plt.hist(l,bins=x,ec='yellow')
+plt.xticks(x)
+plt.grid(axis='y')
+plt.show()
+```
+How to change color of bars in histogram:
+------------------------------------
+```py
+# We can specify our own customized color for the bars by using color argument
+			plt.hist(l,bins=x,color='r',ec='y')
+```
+How to change colors of each bars in histograms:
+--------------------------------------
+- The hist() function returns the **tuple** of the following 3 values
+
+```py
+x = plt.hist(l,bins=x,color='r',ec='y')
+print(type(x))
+print(len(x))
+print(x)
+```
