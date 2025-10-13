@@ -1517,3 +1517,136 @@ print(type(x))
 print(len(x))
 print(x)
 ```
+
+
+##### Day-10 [2-04-2025]
+
+
+To change color of first bar:
+-------------------
+- We can use any one of the following statements to change the color of the bar
+```py
+		patches[0].set_facecolor('green')
+		patches[0].set_fc('green')
+```
+To change color of each bar:
+-----------------------
+```py
+n,bins,patches = plt.hist(l,bins=16,ec='yellow')
+print(n.size)
+print(bins.size)
+plt.xticks(x)
+plt.grid(axis='y')
+colors = ['r','g','orange','b','k','m','y','c','r','g','orange','b','k','m','y','c',]
+for i in range(n.size):
+	patches[i].set_facecolor(colors[i])
+plt.show()
+```
+## Scatter Plots
+
+- Scatter plots are glorious Of all major chart types the most powerful and most commonly used charts are scatter plots.
+- These are very similar to line plots. The terminology like x-axis, y-axis, data points etc are exactly same.
+- Scatter plots are very helpful to **represent the relation between two variables**.
+- scatter() function is used to draw scatter plot.
+
+Ex:
+location and covid cases.
+
+```py
+>>>help(plt.scatter)
+scatter(x, y, s=None, c=None, marker=None, cmap=None, norm=None, vmin=None, vmax=None, alpha=None, linewidths=None, *, edgecolors=None, plotnonfinite=False, data=None, **kwargs)
+
+# s ---> size of the each marker
+# c ---> color of each marker
+# marker ---> marker style
+# cmap ---> colormap
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+x = [1,4,3,2,6,1,3,4,4,6]
+y = [10,40,30,20,60,15,35,45,47,65]
+plt.scatter(x,y)#data points:(1,10),(4,40),(2,30)...........
+plt.show()
+```
+Ex: Month wise covid cases in a particular state
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.arange(1,13)
+y = np.array([120,340,670,1300,7600,3500,6000,4500,3890,1990,980,545])
+plt.scatter(x,y)
+plt.show()
+```
+How to change the color and size of the markers?
+-------------------------------
+- By using color keyword argument we can change the color of the marker.
+```py
+	plt.scatter(x,y,color='red')
+```
+Different colors for each markers:
+--------------------
+```py
+x = [10,40,30,20]
+y = [2,3,2,7]
+colors = ['red','blue','orange','green']
+plt.scatter(x,y,color=colors)
+plt.show()
+```
+Changing size of the marker:
+-------------------
+```py
+sizes = [100,200,300,400]
+plt.scatter(x,y,color=colors,s=sizes)
+```
+Ex:
+```py
+x = np.random.randint(1,101,size=(100))
+y = np.random.randint(1,101,size=(100))
+sizes = 5*np.random.randint(1,101,size=(100))
+plt.scatter(x,y,s=sizes)
+plt.show()
+```
+if we want different colors
+-----------------
+cmap ===> colormap
+
+- colormap maps colors to numbers.
+- If huge number of colors are required, then we should go for colormap.
+- matplotlib defines several predefined colormaps.
+- The default colormap is:'viridis', where 0 represents purple color and 100 represents yellow color.
+- To use colormap we have to use cmap argument.
+- To display the color bar of the corresponding colormap we have to use plt.colorbar().
+
+Note:
+- If we use viridis_r then the values are reversed. 0 represents yellow color and 100 represents purpule color.
+```py
+# colormap ===>viridis
+plt.scatter(x,y,s=sizes,c=colors,cmap='viridis')
+plt.colorbar()
+
+# colormap ===> summer
+plt.scatter(x,y,s=sizes,c=colors,cmap='summer')
+
+# colormap ===> winter
+plt.scatter(x,y,s=sizes,c=colors,cmap='winter')
+
+# colormap ===> cool
+# colormap ===> hot
+# colormap ===> rainbow
+# colormap ===> prism
+# colormap ===> flag
+```
+[Matplotlib Colormap](https://matplotlib.org/stable/users/explain/colors/colormaps.html)
+
+> [!Note]
+> Whenever we using cmap then to specify colors we have to use keyword argument 'c' but not color.  
+>	plt.scatter(x,y,s=sizes,color=colors,cmap='prism')#Invalid  
+>	plt.scatter(x,y,s=sizes,c=colors,cmap='prism')#valid  
+>	plt.scatter(x,y,s=sizes,c='r')#Valid  
+
+Line plot vs scatter plot:
+-----------------------
+- In the case of lineplot, all markers should have same size and same color. But in scatter plot, markers can have different sizes and different colors.
+- Line plots is used to represent contenious trends, scatter plot is for just marking multiple values and values need not be continuous.
