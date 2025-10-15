@@ -1,1 +1,1 @@
-[HTML CSS JS Tutorial](https://drive.google.com/drive/folders/1zb1KUgtAbzlNggzPKs-zYEz5Heg141wu?usp=sharing)
+[HTML CSS JS Tutorial](https://drive.google.com/drive/folders/1zb1KUgtAbzlNggzPKs-zYEz5Heg141wu)
