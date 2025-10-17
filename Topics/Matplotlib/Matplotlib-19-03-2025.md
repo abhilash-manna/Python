@@ -1650,3 +1650,133 @@ Line plot vs scatter plot:
 -----------------------
 - In the case of lineplot, all markers should have same size and same color. But in scatter plot, markers can have different sizes and different colors.
 - Line plots is used to represent contenious trends, scatter plot is for just marking multiple values and values need not be continuous.
+
+##### Day-11 [3-04-2025]
+
+
+How to add labels to scatter plot data points:
+---------------------------
+1. plt.text(x,y,text)
+2. plt.annotate(text,x,y)
+
+By using plt.text()
+------------
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.arange(1,6)#1 to 5
+y = x**2 #1,4,9,16,25
+labels = ['Label-1','Label-2','Label-3','Label-4','Label-5']
+plt.scatter(x,y,s=300,c=[0,100,200,300,400],cmap='prism')
+for i,label in enumerate(labels):
+	plt.text(x[i]+0.2,y[i],label)
+plt.colorbar()
+plt.show()
+```
+By using plt.annotate()
+-----------------
+```py
+for i,label in enumerate(labels):
+	plt.annotate(label,(x[i]+0.2,y[i]))
+plt.show()
+```
+How to add legend to the scatter plot:
+------------------------
+```py
+scat = plt.scatter(x,y,s=marks,c=x,cmap='prism')
+print(type(scat))
+print(scat)
+print(scat.legend_elements()[0])
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+names = ['Sunny','Bunny','Vinny','Chinny','Pinny']
+marks = [700,300,600,400,100]
+x = np.arange(len(names))#[0,1,2,3,4]
+y = x
+scat = plt.scatter(x,y,s=marks,c=x,cmap='prism')
+plt.legend(handles=scat.legend_elements()[0],labels=names)
+plt.show()
+```
+>[!Note]
+> - plt.scatter() returns **matplotlib.collections.PathCollection** object.
+> - To get markers of scatter plot, we have to use **legend_elements()[0]** on the PathCollection object.
+
+
+### Kaggle Case Study:
+
+[Latest Covid-19 india statewise data](https://www.kaggle.com/datasets/anandhuh/covid19-india-statewise-vaccine-data)
+
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+import csv
+state_names = [ ]
+total_cases = np.array([],dtype=int)
+f = open('Latest Covid-19 India Status.csv','r',encoding='utf-8')
+r = csv.reader(f)#returns csv reader object
+h = next(r)#read header column and ignore
+for row in r:
+	state_names.append(row[0])
+	total_cases = np.append(total_cases,int(row[1]))
+x = np.arange(5)
+plt.scatter(x,x,s=total_cases[:5]/10000,c=x,cmap='prism')
+for i,label in enumerate(state_names[:5]):
+	plt.text(x[i],x[i]+0.20,f'{label}({total_cases[i]})',ha='center')
+plt.colorbar()
+plt.tight_layout()
+plt.show()
+```
+## Subplots  
+
+1. Figure
+2. Axes
+
+### 1.Figure:
+
+Figure is an **individual window on the screen**, in which matplotlib **displays the graphs**. i.e it is a container for graphical output.
+
+### 2.Axes:
+
+- The axes is the **plotting area, contained within the figure object**.
+- For every graph,we can take separate axes.
+- Inside axes only, we can take **x-axis,y-axis,grid,legend,bars,data points** etc...
+- Per Figure, we can take **any number of axes objects**.
+- Per axes, we can take **only one graph**.
+
+Creating the figure object
+---
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+b = a**2
+c = a**3
+fig = plt.figure(figsize=(8,6),num=1)
+plt.show()
+
+#creating axes object
+ax1 = fig.add_axes([0.1,0.1,0.8,0.8])#[l,b,w,h]
+
+#creating plot
+ax1.plot(a,b,color='r',marker='o')
+ax1.set(xlabel='N',ylabel='Square Of N',title='Square Function')
+
+#creating subplot
+ax2 = fig.add_axes([0.3,0.4,0.2,0.2])#[l,b,w,h]
+ax2.plot(a,c,color='b',marker='o')
+ax2.set(xlabel='N',ylabel='Cube Of N',title='Cubic Function')
+```
+Need of subplots:
+------------
+- In the above resultant diagram, one plot placed inside another plot(Nested Plot).
+- If we want to place **plots side by side and one plot on top of another**, in well organized way, then we should go for subplots concept.
+
+### How to create subplots:
+
+We can create subplots by using 2-functions:  
+1. pyplot.subplot()
+2. pyplot.subplots()
+
