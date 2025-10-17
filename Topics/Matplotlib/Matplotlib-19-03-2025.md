@@ -2086,3 +2086,128 @@ ax3.set_title('different sample sizes')
 fig.tight_layout()
 plt.show()
 ```
+
+
+##### Day-13 [5-04-2025]
+
+
+## Plotting Geographic Data with Basemap:
+
+- If we want to plot geographic locations like **world map or india map** etc, then we should go for basemap.
+- Basemap is matplotlib extension and it is **not available bydefault with matplotlib, we have install separately**.
+
+- website :	https://matplotlib.org/basemap/
+
+- goto cmd prompt:  
+>		python -m pip install basemap
+
+- How to check installation:  
+	goto python shell:
+>		>>> from mpl_toolkits.basemap import Basemap
+
+Ex:
+```py
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+m = Basemap(projection='mill')
+m.drawcoastlines()
+plt.show()
+```
+Latitude and Longitude:
+----------------
+- Every location on the earth has a global address. This global address is represented by two co-ordinates, which are nothing but **latitude and longitude**.
+- By using latitude and longitude, we can identify any geographical location on the globe.
+- Latitude is the **angular distance of a point north or south of the equator**. Lines of latitude are called as **parallels**. The range of latitude is from -90 to 90. **-90 represents south** where as **90 represents north**.	
+- Longitude is the **angular distance of a point east or west of the prime meridians(Greenwich Meridian)**. Lines of longitude are called as **meridians**. The range of longitude is from -180 to 180. **-180 represents west** where as **180 represents east**.
+
+Important methods of Basemap:
+-----------------
+1. Methods for physical boundaries and bodies of water
+	- drawcoastlines()
+	- drawmapboundaries()
+	- drawrivers()
+	- drawlsmask()
+
+2. Methods for political boundaries:
+	- drawcountries()
+	- drawstates()
+
+3. Methods for Map features:
+	- drawparallels()
+	- drawmeridians()
+
+4. Methods of whole-globe images:
+	- bluemarble()
+	- etopo()
+	- shadedrelief()
+
+Draw countries. resolution cruide
+```py
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+fig = plt.figure(figsize=(12,6))
+m = Basemap(projection='mill',resolution='c')
+m.drawcoastlines(color='r')
+plt.show()
+
+#Draw countries and states with color
+m.drawcountries(color='r')
+m.drawstates(color='b')
+
+#Draw countries and rivers with color
+m.drawcountries(color='r')
+m.drawrivers(color='b')
+
+#Draw countries with color and mapboundary
+m.drawmapboundary(fill_color='aqua',color='orange',linewidth=10)
+
+#fillcontinents
+m.fillcontinents(color='lime',lake_color='aqua')
+
+#dralsmask
+m.drawlsmask(land_color='lightgreen',ocean_color='aqua',lakes=True)
+
+#drawparallels
+m.drawparallels(np.arange(-90,90,10),labels=[True,False,False,False])
+#labels = [left,right,top,bottom]
+
+#drawmeridians
+m.drawmeridians(np.arange(-180,180,30),labels=[False,False,False,True])
+
+#Drawparallels and drawmeridians
+m.drawparallels(np.arange(-90,90,10),labels=[True,False,False,False])
+m.drawmeridians(np.arange(-180,180,30),labels=[False,False,False,True])
+
+#bluemarble
+fig = plt.figure(figsize=(12,6))
+m = Basemap(projection='mill',resolution='c')
+m.bluemarble()/m.etopo()/m.shadedrelief()
+plt.show()
+```
+How to select particular area of the map:
+---------------------------------
+1. lower left corner latitude (llcrnrlat)
+2. lower left corner longitude (llcrnrlon)
+3. upper right corner latitude (urcrnrlat)
+4. upper right corner longitude (urcrnrlon)
+
+How to select only india
+--------------------
+- 7.914659836544026, 55.550727789352045 ---> lower left corner(lat,lon)
+- 39.25532793701909, 92.464789122616 ---> upper right corner(lat,lon)
+
+```py
+fig = plt.figure(figsize=(12,6))
+m = Basemap(
+	projection='mill',
+	resolution='c',
+	llcrnrlat=7.914659836544026,
+	llcrnrlon=64.550727789352045,
+	urcrnrlat=39.25532793701909,
+	urcrnrlon=95.464789122616)
+m.drawcoastlines()
+m.drawcountries(color='r')
+m.drawmapboundary(fill_color='aqua',color='orange')
+m.fillcontinents(color='lime',lake_color='aqua')
+plt.show()
+```
