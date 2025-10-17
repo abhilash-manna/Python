@@ -1780,3 +1780,309 @@ We can create subplots by using 2-functions:
 1. pyplot.subplot()
 2. pyplot.subplots()
 
+
+##### Day-12 [4-04-2025]
+
+
+1.pyplot.subplot():
+-----------------
+```py
+>>> help(plt.subplot)
+subplot(*args, **kwargs)
+```
+Call signatures::
+-----------
+```py
+subplot(nrows, ncols, index, **kwargs)
+subplot(pos, **kwargs)
+subplot(**kwargs)
+subplot(ax)
+```
+>[!Note]
+> 1. Here index starts from 1
+> 2. plt.subplot(1,1,1)
+
+Ex:
+```py
+fig = plt.figure(figsize=(8,6),num=1)
+ax1 = plt.subplot(2,2,1)
+ax2 = plt.subplot(2,2,2)
+ax3 = plt.subplot(2,2,3)
+ax4 = plt.subplot(2,2,4)
+plt.show()
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+b = a**2
+c = a**3
+fig = plt.figure(figsize=(8,6),num=1)
+ax1 = plt.subplot(2,2,1)
+ax1.plot(a,b,color='r',marker='o')
+ax1.set(xlabel='N',ylabel='Square Of N',title='Square Function')
+ax2 = plt.subplot(2,2,2)
+ax2.plot(a,c,color='b',marker='o')
+ax2.set(xlabel='N',ylabel='Cube Of N',title='Cubic Function')
+ax3 = plt.subplot(2,2,3)
+ax3.plot(a,b,color='r',marker='o')
+ax3.set(xlabel='N',ylabel='Square Of N',title='Square Function')
+ax4 = plt.subplot(2,2,4)
+ax4.plot(a,c,color='b',marker='o')
+ax4.set(xlabel='N',ylabel='Cube Of N',title='Cubic Function')
+plt.tight_layout()
+plt.show()
+```
+>[!Note]
+> - In the above figure the title and xlages are overlapping.
+> - To overcome this type of problem we can use **plt.tigh_layout()**.
+
+create 6 subplots in the figure
+```py
+fig = plt.figure(figsize=(8,6),num=1)
+ax1 = plt.subplot(3,2,1)
+ax2 = plt.subplot(3,2,2)
+ax3 = plt.subplot(3,2,3)
+ax4 = plt.subplot(3,2,4)
+ax5 = plt.subplot(3,2,5)
+ax6 = plt.subplot(3,2,6)
+plt.show()
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+b = a**2
+c = a**3
+
+fig = plt.figure(figsize=(8,6),num=1)
+
+ax1 = plt.subplot(3,2,1)
+ax1.plot(a,b,color='r',marker='o')
+ax1.set(xlabel='N',ylabel='Square Of N',title='Square Function')
+
+ax2 = plt.subplot(3,2,2)
+ax2.plot(a,c,color='b',marker='o')
+ax2.set(xlabel='N',ylabel='Cube Of N',title='Cubic Function')
+
+ax3 = plt.subplot(3,2,3)
+ax3.plot(a,b,color='r',marker='o')
+ax3.set(xlabel='N',ylabel='Square Of N',title='Square Function')
+
+ax4 = plt.subplot(3,2,4)
+ax4.plot(a,c,color='b',marker='o')
+ax4.set(xlabel='N',ylabel='Cube Of N',title='Cubic Function')
+
+ax5 = plt.subplot(3,2,5)
+ax5.plot(a,b,color='r',marker='o')
+ax5.set(xlabel='N',ylabel='Square Of N',title='Square Function')
+
+ax6 = plt.subplot(3,2,6)
+ax6.plot(a,c,color='b',marker='o')
+ax6.set(xlabel='N',ylabel='Cube Of N',title='Cubic Function')
+
+plt.suptitle('One Figure But six plots',color='r',size=15)
+plt.tight_layout()
+plt.show()
+```
+Ex:
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+b = a**2
+c = a**3
+
+fig = plt.figure(figsize=(8,6),num=1)
+
+ax1 = plt.subplot(3,2,1)
+ax1.plot(a,b,color='r',marker='o')
+ax1.set(xlabel='N',ylabel='Square Of N',title='Enquiry Report')
+
+ax2 = plt.subplot(3,2,2)
+ax2.plot(a,c,color='b',marker='o')
+ax2.set(xlabel='N',ylabel='Cube Of N',title='Sales Report')
+
+ax3 = plt.subplot(3,2,3)
+ax3.plot(a,b,color='r',marker='o')
+ax3.set(xlabel='N',ylabel='Square Of N',title='Faculty Report')
+
+ax4 = plt.subplot(3,2,4)
+ax4.plot(a,c,color='b',marker='o')
+ax4.set(xlabel='N',ylabel='Cube Of N',title='Fees Report')
+
+ax5 = plt.subplot(3,2,5)
+ax5.plot(a,b,color='r',marker='o')
+ax5.set(xlabel='N',ylabel='Square Of N',title='Expenses Report')
+
+ax6 = plt.subplot(3,2,6)
+ax6.plot(a,c,color='b',marker='o')
+ax6.set(xlabel='N',ylabel='Cube Of N',title='Batches Report')
+
+plt.suptitle('NARESH IT REPORTS',color='r',size=15)
+plt.tight_layout()
+plt.show()
+```
+Problems with subplot() approach:
+---------------
+- For every subplot we have to **call subplot() function separately**.
+- If we want to create large number of subplots, then it will become difficult.
+- To overcome this problem we should go for **subplots() function**, which returns all axes objects at a time.
+
+2.pyplot.subplots():
+----
+```py
+>>>help(plt.subplots)
+subplots(nrows=1, ncols=1, *, sharex=False, sharey=False, squeeze=True, subplot_kw=None, gridspec_kw=None, **fig_kw)
+Create a figure and a set of subplots.
+```
+Usage:
+
+1. **fig,ax = plt.subplots()**
+- It returns one figure and one axes object.
+```py
+#one figure object and one axes object
+fig,axs = plt.subplots()
+print(fig)
+print(axs)
+```
+2. **fig,axs = plt.subplots(2,2)**  
+- It returns one figure object and ndarray of 4-axes objects
+```py
+#one figure object and multiple axes objects
+fig,axs = plt.subplots(2,2)
+print(fig)
+print(axs)
+```
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+b = a**2
+c = a**3
+fig,axs = plt.subplots(3,2)
+
+axs[0][0].plot(a,b,color='r',marker='o')
+axs[0][0].set(xlabel='N',ylabel='Square of N',title='Square Function')
+
+axs[0][1].plot(a,c,color='b',marker='o')
+axs[0][1].set(xlabel='N',ylabel='Cube of N',title='Cubic Function')
+
+axs[1][0].plot(a,b,color='r',marker='o')
+axs[1][0].set(xlabel='N',ylabel='Square of N',title='Square Function')
+
+axs[1][1].plot(a,c,color='b',marker='o')
+axs[1][1].set(xlabel='N',ylabel='Cube of N',title='Cubic Function')
+
+axs[2][0].plot(a,b,color='r',marker='o')
+axs[2][0].set(xlabel='N',ylabel='Square of N',title='Square Function')
+
+axs[2][1].plot(a,c,color='b',marker='o')
+axs[2][1].set(xlabel='N',ylabel='Cube of N',title='Cubic Function')
+
+plt.suptitle('One Figure But six plots',color='r',size=15)
+plt.tight_layout()
+plt.show()
+```
+shortcut way example
+-----------------
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+a = np.arange(10)
+b = a**2
+c = a**3
+fig,((ax1,ax2),(ax3,ax4),(ax5,ax6)) = plt.subplots(3,2)
+
+ax1.plot(a,b,color='r',marker='o')
+ax1.set(xlabel='N',ylabel='Square of N',title='Square Function')
+
+ax2.plot(a,c,color='b',marker='o')
+ax2.set(xlabel='N',ylabel='Cube of N',title='Cubic Function')
+
+ax3.plot(a,b,color='r',marker='o')
+ax3.set(xlabel='N',ylabel='Square of N',title='Square Function')
+
+ax4.plot(a,c,color='b',marker='o')
+ax4.set(xlabel='N',ylabel='Cube of N',title='Cubic Function')
+
+ax5.plot(a,b,color='r',marker='o')
+ax5.set(xlabel='N',ylabel='Square of N',title='Square Function')
+
+ax6.plot(a,c,color='b',marker='o')
+ax6.set(xlabel='N',ylabel='Cube of N',title='Cubic Function')
+
+plt.suptitle('One Figure But six plots',color='r',size=15)
+plt.tight_layout()
+plt.show()
+```
+Different types of subplots
+----------------------
+```py
+import matplotlib.pyplot as plt
+import numpy as np
+fig,((ax1,ax2),(ax3,ax4)) = plt.subplots(2,2)
+
+#setting the figure size
+fig.set_size_inches(10,6)
+plt.show()
+
+#line plot creation
+x = np.arange(4)
+y = x**2
+ax1.plot(x,y,'ro-')
+ax1.set(xlabel='N Value',ylabel='Square Of N',title='Line Plot')
+
+#Scatter plot creation
+x = np.arange(5)
+y = x**2
+ax2.scatter(x,y,s=300,c=[0,25,50,75,100],cmap='prism')
+ax2.set(xlabel='N Value',ylabel='Square Of N',title='Scatter Plot')
+
+#Bar chart creation
+x = np.arange(5)
+y = [100,500,400,200,300]
+ax3.bar(x,y,color=['r','k','y','g','b'])
+ax3.set(xlabel='Year',ylabel='Sales',title='Bar Chart')
+
+#Pie chart creation
+marks = np.array([25,30,43,12])
+mylabels = ['Python','Java','Devops','DS']
+ax4.pie(marks,labels=mylabels,autopct='%.2f%%')
+ax4.set(title='Pie Chart')
+
+plt.suptitle('Subplots of different types:',color='r',size=15)
+plt.tight_layout()
+plt.show()
+```
+Ex:
+```py
+import numpy as np
+import matplotlib.pyplot as plt
+
+n_bins = 10
+x = np.random.randn(1000, 3)
+
+fig, ((ax0, ax1), (ax2, ax3)) = plt.subplots(nrows=2, ncols=2)
+
+colors = ['red', 'tan', 'lime']
+ax0.hist(x, n_bins, histtype='bar', color=colors, label=colors)
+ax0.legend(prop={'size': 10})
+ax0.set_title('bars with legend')
+
+ax1.hist(x, n_bins, histtype='bar', stacked=True)
+ax1.set_title('stacked bar')
+
+ax2.hist(x, n_bins, histtype='step', stacked=True, fill=False)
+ax2.set_title('stack step (unfilled)')
+
+# Make a multiple-histogram of data-sets with different length.
+x_multi = [np.random.randn(n) for n in [10000, 5000, 2000]]
+ax3.hist(x_multi, n_bins, histtype='bar')
+ax3.set_title('different sample sizes')
+
+fig.tight_layout()
+plt.show()
+```
